@@ -17,6 +17,7 @@ const MessagingResponse = twilio.twiml.MessagingResponse;
 // const phoneNumber = '+15392103638';
 
 app.post('/sms', async (req, res) => {
+  console.log(req.body)
   const body = req.body.Body
   const responseMessage = await responseHandler(body.trim())
 
@@ -32,8 +33,7 @@ http.createServer(app).listen(PORT, () => {
   console.log(`Started server at PORT ${PORT}`)
 })
 
-/*
+
 ;(async () => {
-  console.log(await responseHandler('GET_INDEX NASDAQ'))
+  console.log(await responseHandler('HELP'))
 })()
-*/

@@ -4,9 +4,9 @@ function getHelp() {
   let message = ''
   message += 'Stock Quotes SMS\n\n'
   message += 'Available Quotes:\n'
-  message += 'GET-INDEXES - Dow Jones, S&P 500, S&P/TSX, and NASDAQ'
-  message += 'GET-INDEX (DowJones | S&P500 | S&P/TSX | NASDAQ) - Dow Jones, S&P 500, S&P/TSX, or NASDAQ, respectively'
-  message += 'GET-TICKER <ticker> - Stock with Ticker <ticker>'
+  message += 'GET-INDEXES - Dow Jones, S&P 500, S&P/TSX, and NASDAQ\n'
+  message += 'GET-INDEX (DowJones | S&P500 | S&P/TSX | NASDAQ) - Dow Jones, S&P 500, S&P/TSX, or NASDAQ, respectively\n'
+  message += 'GET-TICKER <ticker> - Stock with Ticker <ticker>\n'
   return message
 }
 
