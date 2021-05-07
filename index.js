@@ -1,20 +1,23 @@
+// Imports and configurations 
 const http = require('http');
 const express = require('express')
 const twilio = require('twilio')
 require('dotenv').config()
 
-const { getDowJonesQuote } = require('./yfinance')
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const phoneNumber = '+15392103638';
 
+//
+const app = express()
 const MessagingResponse = twilio.twiml.MessagingResponse;
 
-const app = express()
-
 app.post('/sms', (req, res) => {
+  const message = req.body
+
   const twiml = new MessagingResponse();
 
+  console.log(`Body: ${message}`)
   twiml.message('The Robots are coming! Head for the hills!');
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
