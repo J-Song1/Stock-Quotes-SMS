@@ -1,0 +1,27 @@
+{
+  "name": "Stock-Quotes-SMS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joon7891/Stock-Quotes-SMS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Joon7891/Stock-Quotes-SMS/issues"
+  },
+  "homepage": "https://github.com/Joon7891/Stock-Quotes-SMS#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cheerio": "*",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "twilio": "^3.61.0"
+  }
+}
