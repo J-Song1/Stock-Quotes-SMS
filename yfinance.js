@@ -61,8 +61,6 @@ const getDowJonesQuote = async () => {
   return res
 }
 
-getIndexes()
-
 module.exports = {
   getIndexes,
   getDowJonesQuote
