@@ -20,8 +20,9 @@ app.post('/sms', (req, res) => {
   res.end(twiml.toString());
 })
 
-http.createServer(app).listen(1337, () => {
-  console.log('1337')
+const PORT = process.env.port || 1337
+http.createServer(app).listen(PORT, () => {
+  console.log(PORT)
 })
 
 
