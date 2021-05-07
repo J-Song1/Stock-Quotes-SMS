@@ -42,8 +42,7 @@ const getQuote = async (page) => {
   return data
 }
 
-
-async function getIndexes() {
+async function getIndexesQuotes() {
   let indexes = []
   for (const key in INDEXES) {
     indexes.push(await getQuote(INDEXES[key]))
@@ -53,15 +52,6 @@ async function getIndexes() {
   return indexes
 }
 
-
-const getDowJonesQuote = async () => {
-  let res = await getQuote(PAGES.DOW_JONES)
-  res.name = PAGES.DOW_JONES.name
-  console.log(res)
-  return res
-}
-
 module.exports = {
-  getIndexes,
-  getDowJonesQuote
+  getIndexesQuotes,
 }
