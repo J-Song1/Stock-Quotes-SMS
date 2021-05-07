@@ -32,7 +32,8 @@ http.createServer(app).listen(PORT, () => {
   console.log(`Started server at PORT ${PORT}`)
 })
 
-
+/*
 ;(async () => {
   console.log(await responseHandler('GET_INDEX NASDAQ'))
 })()
+*/
