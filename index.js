@@ -1,41 +1,39 @@
+// Imports and configurations 
+const http = require('http');
 const express = require('express')
 const twilio = require('twilio')
+const bodyParser = require('body-parser')
 require('dotenv').config()
 
-const { getDowJonesQuote } = require('./yfinance')
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const phoneNumber = '+15392103638';
+const responseHandler = require('./responseHandler')
 
+// Setting up app wiht middleware
+const app = express()
+app.use(bodyParser.urlencoded({ extended: true }))
 const MessagingResponse = twilio.twiml.MessagingResponse;
 
-const app = express()
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const phoneNumber = '+15392103638';
 
-app.post('/sms', (req, res) => {
+app.post('/sms', async (req, res) => {
+  const body = req.body.Body
+  const responseMessage = await responseHandler(body.trim())
+
   const twiml = new MessagingResponse();
-
-  twiml.message('The Robots are coming! Head for the hills!');
+  twiml.message(responseMessage);
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 })
 
-http.createServer(app).listen(1337, () => {
-  console.log('1337')
+const PORT = process.env.PORT || 1337
+http.createServer(app).listen(PORT, () => {
+  console.log(`Started server at PORT ${PORT}`)
 })
 
-
-
-//const client = require('twilio')(accountSid, authToken)
-
 /*
-client.messages
-  .create({
-    body: 'Hi There!',
-    from: phoneNumber,
-    to: '+16475280321'
-  })
-  .then(message => {
-    console.log(message)
-  })
+;(async () => {
+  console.log(await responseHandler('GET_INDEX NASDAQ'))
+})()
 */
