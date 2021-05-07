@@ -10,7 +10,7 @@ const INDEXES = {
     name: 'S&P 500',
     url: 'https://ca.finance.yahoo.com/quote/%5EGSPC'
   },
-  SP_TXS: {
+  SP_TSX: {
     name: 'S&P/TSX Composite',
     url: 'https://ca.finance.yahoo.com/quote/%5EGSPTSE'
   },
@@ -42,16 +42,59 @@ const getQuote = async (page) => {
   return data
 }
 
-async function getIndexesQuotes() {
+function formatData({ name, price, change }) {
+  let message = ''
+  message += `${name}\n`
+  message += `Price: ${price}\n`
+  message += `Change: ${change}\n\n` 
+  return message
+}
+
+async function getIndexes() {
   let indexes = []
   for (const key in INDEXES) {
     indexes.push(await getQuote(INDEXES[key]))
   }
 
-  console.log(indexes)
-  return indexes
+  let message = ''
+  indexes.forEach((index, _) => {
+    message += formatData(index)
+  })
+
+  return message
+}
+
+async function getIndex(indexName) {
+  let data = null
+  switch (indexName) {
+    case 'DowJones':
+      data = await getQuote(INDEXES.DOW_JONES)
+      break
+
+    case 'S&P500':
+      data = await getQuote(INDEXES.SP_500)
+      break
+
+    case 'S&P/TSX':
+      data = await getQuote(INDEXES.SP_TSX)
+      break
+
+    case 'NASDAQ':
+      data = await getQuote(INDEXES.NASDAQ)
+      break
+  }
+
+  if (data) {
+    return formatData(data)
+  }
+
+  let message = ''
+  message += 'Error: Invalid Index\n'
+  message += 'Valid Indexes: \"DowJones\", \"S&P500\", \"S&P/TSX\", "NASDAQ\"'
+  return message
 }
 
 module.exports = {
-  getIndexesQuotes,
+  getIndexes,
+  getIndex
 }

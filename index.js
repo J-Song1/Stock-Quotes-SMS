@@ -31,3 +31,12 @@ const PORT = process.env.PORT || 1337
 http.createServer(app).listen(PORT, () => {
   console.log(`Started server at PORT ${PORT}`)
 })
+
+/*
+;(async () => {
+  console.log(await responseHandler('GET_INDEX NASDAQ'))
+  console.log(await responseHandler('GET_INDEX S&P500'))
+  console.log(await responseHandler('GET_INDEX S&P/TSX'))
+  console.log(await responseHandler('GET_INDEX DowJones'))
+})()
+*/

@@ -1,25 +1,27 @@
-const { getIndexesQuotes } = require('./quotes')
+const { getIndexes, getIndex } = require('./quotes')
 
-async function getIndexes() {
-  const indexes = await getIndexesQuotes()
-
+function getHelp() {
   let message = ''
-  indexes.forEach((index, _) => {
-    message += `${index.name}\n`
-    message += `Price: ${index.price}\n`
-    message += `Change: ${index.change}\n\n`
-  })
-
-  return message
+  message += 'Stock Quotes SMS\n\n'
+  message += 'Available Quotes:\n'
+  message += 'GET_INDEXES - Dow Jones, S&P 500, S&P/TSX, and NASDAQ'
+  message += 'GET_INDEX (Dow Jones | S&P 500 | S&P/TSX | NASDAQ) - Dow Jones, S&P 500, S&P/TSX, or NASDAQ, respectively'
 }
 
-
 async function responseHandler(message) {
-  if (message == 'GET_INDEXES') {
-    return await getIndexes()
-  }
+  const tokens = message.split(' ')
 
-  return 'Error: Invalid token'
+  if (message == 'HELP') {
+    return getHelp()
+  } else if (message == 'GET_INDEXES') {
+    return await getIndexes()
+  } else if (tokens.length == 2 && tokens[0] == 'GET_INDEX') {
+    return await getIndex(tokens[1])
+  } 
+
+  let errorMessage = 'Error: Invalid Operation\n'
+  errorMessage += getHelp()
+  return errorMessage
 }
 
 module.exports = responseHandler
