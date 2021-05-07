@@ -4,9 +4,10 @@ function getHelp() {
   let message = ''
   message += 'Stock Quotes SMS\n\n'
   message += 'Available Quotes:\n'
-  message += 'GET_INDEXES - Dow Jones, S&P 500, S&P/TSX, and NASDAQ'
-  message += 'GET_INDEX (DowJones | S&P500 | S&P/TSX | NASDAQ) - Dow Jones, S&P 500, S&P/TSX, or NASDAQ, respectively'
-  message += 'GET_TICKER <ticker> - Stock with Ticker <ticker>'
+  message += 'GET-INDEXES - Dow Jones, S&P 500, S&P/TSX, and NASDAQ'
+  message += 'GET-INDEX (DowJones | S&P500 | S&P/TSX | NASDAQ) - Dow Jones, S&P 500, S&P/TSX, or NASDAQ, respectively'
+  message += 'GET-TICKER <ticker> - Stock with Ticker <ticker>'
+  return message
 }
 
 async function responseHandler(message) {
@@ -14,11 +15,11 @@ async function responseHandler(message) {
 
   if (message == 'HELP') {
     return getHelp()
-  } else if (message == 'GET_INDEXES') {
+  } else if (message == 'GET-INDEXES') {
     return await getIndexes()
-  } else if (tokens.length == 2 && tokens[0] == 'GET_INDEX') {
+  } else if (tokens.length == 2 && tokens[0] == 'GET-INDEX') {
     return await getIndex(tokens[1])
-  } else if (tokens.length == 2 && tokens[0] == 'GET_TICKER') {
+  } else if (tokens.length == 2 && tokens[0] == 'GET-TICKER') {
     return await getTicker(tokens[1])
   }
 
