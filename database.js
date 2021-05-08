@@ -12,7 +12,9 @@ const userSchema = new Schema({
 const User = mongoose.model('User', userSchema)
 
 // Initiating MongoDB Atlas connection
-function initializeMongo(callback = null) {
+function initializeMongo() {
+  console.log('Initialize Mongo')
+
   const username = 'username1234'
   const password = 'password78917891'
   const mongoURI = `mongodb+srv://${username}:${password}@cluster0.rp2c3.mongodb.net/sms?retryWrites=true&w=majority`
@@ -21,11 +23,10 @@ function initializeMongo(callback = null) {
     useUnifiedTopology: true
   }
 
+  console.log('Mongoose 2')
   mongoose.connect(mongoURI, mongoConfig)
     .then((result) => {
       console.log('Connected to MongoDB')
-
-      if (callback) callback()
     })
     .catch((error) => {
       console.error(error)

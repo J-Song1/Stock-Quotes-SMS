@@ -1,6 +1,9 @@
 // Imports and configurations 
 const http = require('http');
 const express = require('express')
+const morgan = require('morgan')
+const cors = require('cors')
+
 const twilio = require('twilio')
 const bodyParser = require('body-parser')
 require('dotenv').config()
@@ -10,7 +13,10 @@ const { initializeMongo, User } = require('./database')
 
 // Setting up app with middleware
 const app = express()
+app.use(morgan())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// Setting up twilio link
 const MessagingResponse = twilio.twiml.MessagingResponse;
 
 app.post('/sms', async (req, res) => {
@@ -21,22 +27,14 @@ app.post('/sms', async (req, res) => {
   const responseMessage = await responseHandler(body.trim(), phoneNumber)
 
   const twiml = new MessagingResponse();
-  twiml.message(`${responseMessage}\n${phoneNumber}`);
+  twiml.message(`${responseMessage}`);
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 })
 
 const PORT = process.env.PORT || 1337
-initializeMongo(() => {
-})
-
+initializeMongo()
 http.createServer(app).listen(PORT, () => {
   console.log(`Started server on PORT ${PORT}`)
 })
-
-/*
-;(async () => {
-  console.log(await responseHandler('HELP'))
-})()
-*/
