@@ -29,9 +29,10 @@ app.post('/sms', async (req, res) => {
 
 const PORT = process.env.PORT || 1337
 initializeMongo(() => {
-  http.createServer(app).listen(PORT, () => {
-    console.log(`Started server on PORT ${PORT}`)
-  })
+})
+
+http.createServer(app).listen(PORT, () => {
+  console.log(`Started server on PORT ${PORT}`)
 })
 
 /*
