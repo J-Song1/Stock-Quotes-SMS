@@ -1,4 +1,5 @@
 const { getIndexes, getIndex, getTicker } = require('./quotes')
+const { User } = require('./database')
 
 function getHelp() {
   let message = ''
@@ -10,7 +11,7 @@ function getHelp() {
   return message
 }
 
-async function responseHandler(message) {
+async function responseHandler(message, phoneNumber = null) {
   const tokens = message.split(' ')
 
   if (message == 'HELP') {
@@ -21,6 +22,8 @@ async function responseHandler(message) {
     return await getIndex(tokens[1])
   } else if (tokens.length == 2 && tokens[0] == 'GET-TICKER') {
     return await getTicker(tokens[1])
+  } else if (tokens.length == 3 && tokens[0] == 'ADD' && !isNan(tokens[2])) {
+    return add
   }
 
   let errorMessage = 'Error: Invalid Operation\n'

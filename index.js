@@ -6,34 +6,36 @@ const bodyParser = require('body-parser')
 require('dotenv').config()
 
 const responseHandler = require('./responseHandler')
+const { initializeMongo, User } = require('./database')
 
-// Setting up app wiht middleware
+// Setting up app with middleware
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 const MessagingResponse = twilio.twiml.MessagingResponse;
 
-// const accountSid = process.env.TWILIO_ACCOUNT_SID;
-// const authToken = process.env.TWILIO_AUTH_TOKEN;
-// const phoneNumber = '+15392103638';
-
 app.post('/sms', async (req, res) => {
-  console.log(req.body)
   const body = req.body.Body
-  const responseMessage = await responseHandler(body.trim())
+  const phoneNumber = req.body.From
+
+  console.log(`Message from ${phoneNumber}`)
+  const responseMessage = await responseHandler(body.trim(), phoneNumber)
 
   const twiml = new MessagingResponse();
-  twiml.message(responseMessage);
+  twiml.message(`${responseMessage}\n${phoneNumber}`);
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 })
 
 const PORT = process.env.PORT || 1337
-http.createServer(app).listen(PORT, () => {
-  console.log(`Started server at PORT ${PORT}`)
+initializeMongo(() => {
+  http.createServer(app).listen(PORT, () => {
+    console.log(`Started server on PORT ${PORT}`)
+  })
 })
 
-
+/*
 ;(async () => {
   console.log(await responseHandler('HELP'))
 })()
+*/
